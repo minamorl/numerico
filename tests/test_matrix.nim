@@ -73,3 +73,47 @@ suite "Matrix":
     var b = initMatrix[int](3, 2)
     expect AssertionError:
       discard innerProduct(a, b)
+
+  test "Matrix Transposition":
+    var m = initMatrix[int](2, 3)
+    m[0, 0] = 1
+    m[0, 1] = 2
+    m[0, 2] = 3
+    m[1, 0] = 4
+    m[1, 1] = 5
+    m[1, 2] = 6
+
+    var expected = initMatrix[int](3, 2)
+    expected[0, 0] = 1
+    expected[0, 1] = 4
+    expected[1, 0] = 2
+    expected[1, 1] = 5
+    expected[2, 0] = 3
+    expected[2, 1] = 6
+
+    check transpose(m) == expected
+
+  test "Matrix Determinant":
+    var m1 = initMatrix[float](2, 2)
+    m1[0, 0] = 1.0
+    m1[0, 1] = 2.0
+    m1[1, 0] = 3.0
+    m1[1, 1] = 4.0
+    check determinant(m1) == -2.0
+
+    var m2 = initMatrix[float](3, 3)
+    m2[0, 0] = 1.0
+    m2[0, 1] = 2.0
+    m2[0, 2] = 3.0
+    m2[1, 0] = 4.0
+    m2[1, 1] = 5.0
+    m2[1, 2] = 6.0
+    m2[2, 0] = 7.0
+    m2[2, 1] = 8.0
+    m2[2, 2] = 9.0
+    check determinant(m2) == 0.0
+
+  test "Matrix Determinant - Non-square Matrix":
+    var m = initMatrix[float](2, 3)
+    expect AssertionDefect:
+      discard determinant(m)
