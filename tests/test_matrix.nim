@@ -99,7 +99,7 @@ suite "Matrix":
     m1[0, 1] = 2.0
     m1[1, 0] = 3.0
     m1[1, 1] = 4.0
-    check determinant(m1) == -2.0
+    check abs(determinant(m1) - (-2.0)) < 1e-8
 
     var m2 = initMatrix[float](3, 3)
     m2[0, 0] = 1.0
@@ -111,7 +111,7 @@ suite "Matrix":
     m2[2, 0] = 7.0
     m2[2, 1] = 8.0
     m2[2, 2] = 9.0
-    check determinant(m2) == 0.0
+    check abs(determinant(m2)) < 1e-8
 
   test "Matrix Determinant - Non-square Matrix":
     var m = initMatrix[float](2, 3)
