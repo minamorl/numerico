@@ -4,7 +4,7 @@ type
     cols: int
     data: seq[T]
 
-proc initMatrix*[T](rows, cols: int, value: T = 0.0): Matrix[T] =
+proc initMatrix*[T: SomeNumber](rows, cols: int, value: T = 0): Matrix[T] =
   result.rows = rows
   result.cols = cols
   result.data = newSeq[T](rows * cols)
