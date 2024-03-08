@@ -64,12 +64,6 @@ proc transpose*[T](m: Matrix[T]): Matrix[T] =
     for j in 0 ..< m.cols:
       result[j, i] = m[i, j]
 
-proc toFloat[T: SomeNumber](x: T): float =
-  when T is SomeFloat:
-    result = x
-  else:
-    result = x.float
-
 proc determinant*[T: SomeFloat](m: Matrix[T]): T =
   ## Calculates the determinant of a square matrix using Gaussian elimination.
   assert m.rows == m.cols, "Matrix must be square to calculate the determinant"
