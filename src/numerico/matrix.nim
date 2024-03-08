@@ -26,8 +26,36 @@ proc cols*[T](m: Matrix[T]): int =
 proc shape*[T](m: Matrix[T]): (int, int) =
   (m.rows, m.cols)
 
-proc printMatrix*[T](m: Matrix[T]) =
+proc `$`*[T](m: Matrix[T]): string =
+  result = ""
   for i in 0 ..< m.rows:
+    result &= "["
     for j in 0 ..< m.cols:
-      stdout.write m[i, j], " "
-    stdout.write "\n"
+      result &= $m[i, j]
+      if j < m.cols - 1:
+        result &= ", "
+    result &= "]\n"
+
+proc `*`*[T: SomeNumber](a, b: Matrix[T]): Matrix[T] =
+  ## Multiplies two matrices using matrix multiplication (inner product).
+  assert a.cols == b.rows, "Matrix dimensions do not match for multiplication"
+  result = initMatrix[T](a.rows, b.cols)
+  for i in 0 ..< a.rows:
+    for j in 0 ..< b.cols:
+      for k in 0 ..< a.cols:
+        result[i, j] = result[i, j] + T(a[i, k] * b[k, j])
+
+proc `^`*[T: SomeNumber](a, b: Matrix[T]): Matrix[T] =
+  ## Performs the outer product of two matrices.
+  result = initMatrix[T](a.rows, b.cols)
+  for i in 0 ..< a.rows:
+    for j in 0 ..< b.cols:
+      result[i, j] = a[i, 0] * b[0, j]
+
+proc innerProduct*[T: SomeNumber](a, b: Matrix[T]): T =
+  ## Calculates the inner product (dot product) of two matrices.
+  assert a.rows == b.rows and a.cols == b.cols, "Matrix dimensions do not match for inner product"
+  result = T(0)  # Initialize the result to zero
+  for i in 0 ..< a.rows:
+    for j in 0 ..< a.cols:
+      result += a[i, j] * b[i, j]
